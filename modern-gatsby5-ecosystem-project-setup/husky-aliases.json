@@ -1,0 +1,4 @@
+"scripts": {
+  "prepare:husky": "husky install",
+  "postinstall": "npm run prepare:husky"
+}
