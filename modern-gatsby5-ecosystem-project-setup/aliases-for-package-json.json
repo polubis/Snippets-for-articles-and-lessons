@@ -1,0 +1,5 @@
+"scripts": {
+  "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+  "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+  "lint:fix": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --fix"
+}
