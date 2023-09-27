@@ -20,8 +20,6 @@ const environmentFixture = (afterEach: AfterEachFn) => (key: string) => {
   return {
     mock,
     restore,
-    // We used remove - because "delete" keyword
-    // is reserved in JS.
     delete: remove,
   };
 };
