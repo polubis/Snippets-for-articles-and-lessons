@@ -25,7 +25,7 @@ const CounterPage = ({ counter }: CounterPageProps) => {
   // Counter returned from server on first render.
   console.log(counter); // 3.
 
-  const counterStore = useCounter();
+  const counterStore = useCounterStore();
 
   // Client "counterStore" value on first render.
   console.log(counterStore.counter); // 0.
