@@ -18,8 +18,8 @@ const useStoreSync = <T>(
     unsynced.current = false;
   }
   // For "client" we'll return original store.
-  // For "server" the initial one passed from server
-  // props.
+  // For "server" we'll return the initial one passed 
+  // from server props.
   return isClient() ? useStore : useServerStore;
 };
 
