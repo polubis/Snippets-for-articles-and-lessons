@@ -9,7 +9,6 @@ const useStoreSync = <T>(
 ): UseBoundStore<StoreApi<T>> => {
   // Ref to store flag and avoid rerender.
   const unsynced = useRef(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   // Creating default store with initial state.
   const useServerStore = useMemo(() => create<T>(() => state), []);
 
