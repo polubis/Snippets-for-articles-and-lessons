@@ -9,7 +9,7 @@ const useStoreSync = <T>(
 ): UseBoundStore<StoreApi<T>> => {
   // Ref to store flag and avoid rerender.
   const unsynced = useRef(true);
-  // Creating default store with initial state.
+  // Creating store hook with initial state from the server.
   const useServerStore = useMemo(() => create<T>(() => state), []);
 
   if (unsynced.current) {
@@ -17,9 +17,8 @@ const useStoreSync = <T>(
     useStore.setState(state);
     unsynced.current = false;
   }
-  // For "client" we'll return original store.
-  // For "server" we'll return the initial one passed 
-  // from server props.
+  // For "client" we'll return the original store.
+  // For "server" we'll return the newly created one.
   return isClient() ? useStore : useServerStore;
 };
 
