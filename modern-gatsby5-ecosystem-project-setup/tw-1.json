@@ -1,0 +1,10 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  // Important. If you want to use styles in other directories,
+  // be sure that you included pattern here.
+  content: [`./src/pages/*.{js,jsx,ts,tsx}`],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
