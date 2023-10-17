@@ -1,0 +1,5 @@
+"paths": {
+    "gatsby-plugin-dark-mode": [
+        "./src/declarations/gatsby-plugin-dark-mode.d.ts"
+    ]
+}
