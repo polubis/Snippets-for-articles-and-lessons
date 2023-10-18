@@ -6,15 +6,15 @@ interface ElementSize {
   height: number;
 }
 
-// State shape which reflects situation
+// State shape which reflects the situation
 // when we're not able to detect 
-// the size - server side rendering situation.
+// the size - server-side rendering situation.
 interface UndetectedState {
   status: 'undetected';
 }
 
-// State shape which reflects situation
-// when are able to detect - client side.
+// State shape which reflects the situation
+// when we are able to detect - client side.
 interface DetectedState extends ElementSize {
   status: 'detected';
 }
@@ -29,7 +29,7 @@ interface ElementSizeConfig {
 }
 
 // This will be returned by our hook.
-// It's a readonly tuple [state, ref]. 
+// It's a read-only tuple [state, ref]. 
 // "MutableRefObject" is the object returned by React
 // "useRef" hook.
 type ElementSizeReturn<T extends HTMLElement> = Readonly<
