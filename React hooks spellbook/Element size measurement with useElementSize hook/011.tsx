@@ -1,4 +1,4 @@
-import { Subject, throttleTime } from 'rxjs';
+import { Subject, debounceTime } from 'rxjs';
 
 const useElementSize = <T extends HTMLElement>(
   config?: ElementSizeConfig
@@ -20,7 +20,7 @@ const useElementSize = <T extends HTMLElement>(
   useEffect(() => {
     // Listening for events and applying a throttling
     // mechanism with a given delay.
-    const sub = changed$.pipe(throttleTime(config?.delay ?? 150)).subscribe({
+    const sub = changed$.pipe(debounceTime(config?.delay ?? 150)).subscribe({
       next: (size) => {
         setState(size);
       },
