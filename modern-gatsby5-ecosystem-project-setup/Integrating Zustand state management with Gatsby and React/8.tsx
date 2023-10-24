@@ -1,3 +1,5 @@
+import HomeView from '../views/home/home.view';
+
 const HomePage: React.FC = () => {
   return (
     <ThemeToggler>
@@ -8,6 +10,7 @@ const HomePage: React.FC = () => {
             Badge
           </span>
           <span className="dark:text-white text-black">Theme test</span>
+          <HomeView />
         </main>
       )}
     </ThemeToggler>
