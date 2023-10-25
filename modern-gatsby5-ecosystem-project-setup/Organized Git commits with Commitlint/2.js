@@ -4,7 +4,7 @@ module.exports = {
     'type-enum': [
       2, // It means throwing an error.
       `always`,
-      [ // Allowed scopes to use. Add your own if needed.
+      [ // Allowed actions to use. Add your own if needed.
         `build`,
         `chore`,
         `ci`,
