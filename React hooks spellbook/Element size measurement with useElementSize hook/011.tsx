@@ -18,7 +18,7 @@ const useElementSize = <T extends HTMLElement>(
   }, []);
 
   useEffect(() => {
-    // Listening for events and applying a throttling
+    // Listening for events and applying a debounce
     // mechanism with a given delay.
     const sub = changed$.pipe(debounceTime(config?.delay ?? 150)).subscribe({
       next: (size) => {
