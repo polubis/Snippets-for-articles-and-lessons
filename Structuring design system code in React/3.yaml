@@ -1,0 +1,15 @@
+figa-ui-base: The library with utils for creating a design system.
+  lib: The directory that contains library code. 
+  index.ts: The main re-export file.
+
+figa-ui-base: Separate library that contains basic styling/components.
+  lib: The directory that contains library code. 
+  index.ts: The main re-export file.
+
+figa-ui-components: Separate library that contains more components.
+  lib: The directory that contains library code.
+  index.ts: The main re-export file.
+
+figa-ui-design-system: Library that contains design system setup.
+  lib: The directory that contains library code. 
+  index.ts: The main re-export file.
