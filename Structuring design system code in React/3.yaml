@@ -1,4 +1,4 @@
-figa-ui-base: The library with utils for creating a design system.
+figa-ui-core: The library with utils for creating a design system.
   lib: The directory that contains library code. 
   index.ts: The main re-export file.
 
