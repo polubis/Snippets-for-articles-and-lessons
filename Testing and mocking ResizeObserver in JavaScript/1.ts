@@ -1,5 +1,5 @@
 // Inside useElementSize.ts hook.
-useLayoutEffect(() => {
+useIsomorphicLayoutEffect(() => {
   const observeElement = () => {
     const target = ref?.current ?? document.body;
 
