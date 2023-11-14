@@ -1,0 +1,14 @@
+{
+ "name": "@myorq/cli",
+ "version": "1.0.0",
+ "bin": {
+   "my-cli": "bin/my-cli.js"
+ },
+ "dependencies": {
+   "fs-extra": "^9.0.1",
+   "tslib": "^2.0.3",
+   "yargs": "^16.1.0"
+ },
+ "main": "src/index.js",
+ "typings": "src/index.d.ts"
+}
