@@ -1,0 +1,20 @@
+{
+    //...
+    "targets": {
+        "build": {
+            // ...
+        },
+        "serve": {
+            // ...
+        },
+        "lint": {
+            // ,,,
+        },
+        "check": {
+            "executor": "@my-org/my-plugin:check",
+            "options": {
+                "textToCheck": "Hello World"
+            }
+        }
+    }
+}
