@@ -197,10 +197,12 @@ added={[[1,4], [5,9], [12,12], [26,35]]}
 src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/15.tsx"
 linesCount={36}
 />
+<M>Moreover, the inclusion of an essential property, <B>initialState</B>, becomes particularly crucial when aiming to synchronize the state and client, especially in scenarios involving frameworks like <B>Next</B> or <B>Gatsby</B>.</M>
+<Hint hasBg>To explore the integration of <B>Zustand</B> with frameworks like <B>Next</B> or any other server-side rendering (<B>SSR</B>) and static site generation (<B>SSG</B>) frameworks, feel free to delve into the article: <A outside href="/articles/integrations/how-to-integrate-state-management-in-zustand-with-nextjs/">🌟 How to integrate state management in Zustand with NextJS</A>.</Hint>
 </Section>
 
 <Section>
-  <XL>Lack of state memoization</XL>
+  <XL>Lack of memoization</XL>
   <M>
  
   </M>
