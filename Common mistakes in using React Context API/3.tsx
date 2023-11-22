@@ -21,6 +21,7 @@ const Component4 = () => {
 const Component1 = () => {
   return <Component2 />
 }
+
 const MyStateProvider = () => {
   const [state, setState] = useState({ open: true })
 
