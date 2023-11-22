@@ -1,10 +1,7 @@
-import type { ReactNode } from "react"
+<MyContextProvider>
+  <AnyComponent1 />
+</MyContextProvider>
 
-interface MyContextProviderProps {
-  children: ReactNode
-}
-
-export const MyContextProvider = ({ children }: MyContextProviderProps) => {
-  // 💚 Any ReactNode may be passed!
-  return <MyContext value={value}>{children}</MyContext>
-}
+<MyContextProvider>
+  <AnyComponent2 />
+</MyContextProvider>
