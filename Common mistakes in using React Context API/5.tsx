@@ -1,9 +1,9 @@
 // CounterProvider.tsx file.
 import { useState } from "react"
 
-const CounterContext = createContext(0)
+export const CounterContext = createContext(0)
 
-const CounterProvider = () => {
+export const CounterProvider = () => {
   const [counter, setCounter] = useState(0)
 
   return (
