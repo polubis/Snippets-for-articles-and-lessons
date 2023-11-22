@@ -12,11 +12,9 @@ lang: en
 langs: ["pl"]
 keywords: React Context API best practices, React state management tips, Context API common mistakes, React development optimization, Efficient React state handling
 description: Unlock the full potential of React's Context API with our insightful guide. Discover and rectify common mistakes that may be hindering your application's performance and maintainability. Elevate your React development skills as we delve into best practices, ensuring you harness the true power of Context API for efficient state management. Optimize your code and enhance your React applications with our expert insights.
-readTime: 7
+readTime: 9
 seniorityLevel: intermediate
 title: Common mistakes in using React Context API
-chapters: Bounding Context with concrette component, Lack of initial state override, Duplication of code - lack of facade Bad setup, The state setup hell, Lack of memo, Lack of dev friendly hints, The Zombie child,
-Overuse of Context API, Lack of encapsulation for Context API, Logic coupled with propagation
 ---
 
 <Prelude label="Quick guide to React Context API">
@@ -148,7 +146,7 @@ linesCount={46}
 </Section>
 
 <Section>
-  <XL>💢 Binding context with concrete components</XL>
+  <XL>Binding context with concrete components</XL>
   <M>
     Context should accommodate any kind of <B>ReactNode</B> - be it components, divs, null, and more. If you directly use a component inside <B>Context</B>, you tightly couple it with that particular component, limiting the presentation to a specific manner.
   </M>
@@ -177,3 +175,58 @@ linesCount={7}
 />
 </Section>
 
+<Section>
+  <XL>Absence of initial state override</XL>
+  <M>
+ What if you find yourself in a situation where you need to override the default state because another component is loading data? It can be tricky without a built-in mechanism in the <B>Context Provider</B>.
+  </M>
+  <Code
+mode="dynamic"
+lang="tsx"
+description="Ugly useEffect and additional logic"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/14.tsx"
+linesCount={22}
+/>
+<M>Relying on <B>useEffect</B> can introduce challenges, especially when used solely for setting the initial state. That's why our <B>Provider</B> should offer a dedicated mechanism for this purpose, ideally achieved through properties rather than resorting to <B>useEffect</B>.</M>
+<Code
+mode="dynamic"
+lang="tsx"
+description="Without useEffect"
+changed={[[19,22], [15,15]]}
+added={[[1,4], [5,9], [12,12], [26,35]]}
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/15.tsx"
+linesCount={36}
+/>
+</Section>
+
+<Section>
+  <XL>Lack of state memoization</XL>
+  <M>
+ 
+  </M>
+</Section>
+
+<Section>
+  <XL>Coupling of logic with propagation</XL>
+  <M>
+ 
+  </M>
+</Section>
+
+<Section>
+  <XL>Excessive reliance on the Context API</XL>
+  <M>
+ 
+  </M>
+</Section>
+
+<Example label="Full working example">
+  <M>
+   
+  </M>
+</Example>
+
+
+<Summary label="Conclusions and summary">
+  <M></M>
+</Summary>
