@@ -1,0 +1,26 @@
+---
+cdate: 2023-11-22
+mdate: 2023-11-22
+authorId: polubis
+treviewerId: kzalewska
+lreviewerId: kzalewska
+tags: state management,context api, react
+stack: react,typescript,jest
+purpose: inform
+goal: Show best practices when using Context API in React.
+lang: en
+langs: ["pl"]
+keywords: React Context API best practices, React state management tips, Context API common mistakes, React development optimization, Efficient React state handling
+description: Unlock the full potential of React's Context API with our insightful guide. Discover and rectify common mistakes that may be hindering your application's performance and maintainability. Elevate your React development skills as we delve into best practices, ensuring you harness the true power of Context API for efficient state management. Optimize your code and enhance your React applications with our expert insights.
+readTime: 7
+seniorityLevel: intermediate
+title: Common mistakes in using React Context API
+chapters: Quick guide to React Context API, Real purpose of React Context API, Bad setup, Lack of memo,
+Overuse of Context API, Lack of encapsulation for Context API, Logic coupled with propagation
+
+---
+
+<Prelude label="Quick guide to React Context API">
+<M>
+Before delving into the nuances of good and bad practices with the <B>React Context API</B>, it's imperative to grasp how it functions and its underlying purpose. Picture a scenario where you have <B>five deeply nested components</B> requiring access to <B>state</B> at the top, along with <B>several functions</B> to update that state. It will look as follows:</M>
+</Prelude>
