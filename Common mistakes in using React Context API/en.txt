@@ -15,12 +15,165 @@ description: Unlock the full potential of React's Context API with our insightfu
 readTime: 7
 seniorityLevel: intermediate
 title: Common mistakes in using React Context API
-chapters: Quick guide to React Context API, Real purpose of React Context API, Bad setup, Lack of memo,
+chapters: Bounding Context with concrette component, Lack of initial state override, Duplication of code - lack of facade Bad setup, The state setup hell, Lack of memo, Lack of dev friendly hints, The Zombie child,
 Overuse of Context API, Lack of encapsulation for Context API, Logic coupled with propagation
-
 ---
 
 <Prelude label="Quick guide to React Context API">
 <M>
 Before delving into the nuances of good and bad practices with the <B>React Context API</B>, it's imperative to grasp how it functions and its underlying purpose. Picture a scenario where you have <B>five deeply nested components</B> requiring access to <B>state</B> at the top, along with <B>several functions</B> to update that state. It will look as follows:</M>
+<Code
+mode="dynamic"
+lang="tsx"
+description="Insane coupling of components"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/1.tsx"
+linesCount={22}
+/>
+<M>If you're advocating for the use of the <B>components composition pattern</B>, your code might take a form similar to the following:</M>
+<Code
+mode="dynamic"
+lang="tsx"
+changed={[[7,7], [11,11], [15,15], [22,29]]}
+description="A little bit better"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/2.tsx"
+linesCount={31}
+/>
+<M>This is where the <B>React Context API</B> proves its value. It steps in to alleviate the constraints posed by maintaining the <B>precise structure of the components tree</B> or <B>enforcing prop-drilling</B>. </M>
+<M>By offering a flexible mechanism for <B>sharing data throughout the component tree</B>, the Context API simplifies the process, providing a more dynamic and scalable solution to address complex needs. This flexibility is especially beneficial in scenarios where the structure of the component tree might change frequently - the real applications.</M>
+<Code
+mode="dynamic"
+lang="tsx"
+added={[[1,1], [25, 33]]}
+changed={[[3,5], [9,10], [13,14], [17,18], [21,22]]}
+description="With Context API"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/3.tsx"
+linesCount={33}
+/>
+<M>Indeed, the <B>React Context API</B> simplifies the code by eliminating the need for passing unnecessary props through components. Wrapping the components tree with a <B>Provider</B> and utilizing the dedicated hook <B>useContext</B> streamlines the process of accessing the required information at any level. This abstraction enhances code readability and maintenance, providing a cleaner and more efficient solution compared to <B>prop-drilling</B> or rigid <B>components composition patterns</B>.</M>
+<Hint hasBg>
+I'm currently conducting a side-by-side comparison of the APIs. The real examples will be introduced later, and this is where the distinctions between the two APIs become crucially important.
+</Hint>
+<M>
+It's worth noting that the workload when using the <B>Context API</B> is significantly reduced from a developer's standpoint. You simply wrap the necessary components once, and wherever you need access, you can effortlessly utilize the dedicated <B>Context</B>.</M>
+<M>The last crucial aspect of the <B>Context API</B> is its inherent mechanism of <B>shadowing</B>. This means that if you employ <B>two</B> or <B>more wrappers</B>, it will consistently adopt the values provided by the latest one (it may be useful - will be explained later).</M>
+<Code
+mode="dynamic"
+lang="tsx"
+description="Context API shadowing mechanism"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/4.tsx"
+linesCount={17}
+/>
 </Prelude>
+
+<Section>
+  <XL>Using Context directly</XL>
+  <M>
+What does <B>direct usage of context</B> entail? While it was showcased earlier, let's revisit it for enhanced clarity:
+  </M>
+  <Code
+mode="dynamic"
+lang="tsx"
+description="The wrong usage of Context API"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/5.tsx"
+linesCount={25}
+/>
+<M>Directly using context in this manner can be considered suboptimal for a few reasons:</M>
+<L ordered>
+  <Li>"Limited reusability": components using context directly may be less reusable, as they are closely tied to a particular context,</Li>
+  <Li>"Testing challenges": mocking or providing alternative contexts for testing purposes becomes less straightforward,</Li>
+   <Li>"Readability and maintainability": code readability and maintainability can be compromised as the logic for accessing and utilizing context is dispersed throughout the component, potentially making it harder to follow and update,</Li>
+    <Li>"Potential for shadowing issues": in scenarios with nested context providers, direct usage might lead to unintentional shadowing of context values, causing unexpected behavior</Li>
+     <Li>"Dependency on a specific context structure": this approach makes the component tightly coupled to a specific context structure. If the context structure changes, it can lead to widespread updates in the components using it.</Li>
+</L>
+<M>
+To address these issues, a solution involves implementing a straightforward <B>abstraction</B> using a <B>custom hook</B> for <B>each context</B>. This approach removes the ability to directly access the <B>Context</B> and compels developers to consume APIs exclusively through a <B>single source of truth</B>.</M>
+<Code
+mode="dynamic"
+lang="tsx"
+changed={[[5,5], [29,29], [25,25]]}
+added={[[17,22]]}
+description="Context used via custom hook"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/6.tsx"
+linesCount={32}
+/>
+<M>This simple refinement not only addresses a multitude of potential issues during refactoring and structural changes but also promotes code consistency. By mandating a centralized pattern through a custom hook, maintenance becomes more straightforward, minimizing the risk of unintended consequences across the application.</M>
+</Section>
+
+<Section>
+  <XL>Over-reliance on developers</XL>
+  <M>
+    Without implying any negativity, it's crucial to acknowledge that tasks prone to human error should be automated or validated wherever possible. We're all human, and various individuals, including backend developers or juniors who might not be well-versed in <B>React</B>, may interact with the code. 
+  </M>
+  <M>In scenarios where someone forgets to add the necessary wrapper to the components tree, it could result in an ambiguous exception, typically something like <B>"Cannot read properties of undefined"</B>, creating unnecessary confusion for developers. </M>
+  <Code
+mode="dynamic"
+lang="tsx"
+description="Unclear error will occur if no provider"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/10.tsx"
+linesCount={5}
+/>
+  <M>This issue arises when an object is passed as the provider's value, but the corresponding components tree isn't wrapped. In such cases, implementing custom exception handling becomes crucial to alert developers directly about this oversight, providing clear and actionable warnings. Therefore, in our abstracted custom hook, we will incorporate this provision: </M>
+  <Code
+mode="dynamic"
+lang="tsx"
+description="Adding custom exception handler"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/7.tsx"
+linesCount={10}
+/>
+</Section>
+
+<Section>
+  <XL>Struggling with the initial state hell</XL>
+  <M>
+    The <B>createContext</B> function necessitates an initial state for functionality, as per the interface contract. However, it also mandates that this state "matches" the type specified in the <B>generic type parameter</B>. The practice of adding numerous empty functions and initial states is not only inefficient but also time-consuming.
+  </M>
+  <Code
+mode="dynamic"
+lang="tsx"
+description="The initial state hell"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/8.tsx"
+linesCount={14}
+/>
+<M>Why is this problematic? Forgetting to use the <B>Context Provider</B> can result in <B>false positives</B> or <B>negatives</B> with this state. Moreover, it demands additional effort each time you introduce a new function, creating unnecessary overhead.</M>
+<Code
+mode="dynamic"
+lang="tsx"
+added={[[1,4], [6,9], [11,11], [17,27]]}
+changed={[[41,41], [14,14], [30,30]]}
+description="Initial state setup improved"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/9.tsx"
+linesCount={46}
+/>
+<M>Now, if someone forgets to include a provider or if the <B>Context value</B> becomes falsy, we will alert the developer. This approach provides a clear distinction between the state and the API for managing our context</M>
+</Section>
+
+<Section>
+  <XL>💢 Binding context with concrete components</XL>
+  <M>
+    Context should accommodate any kind of <B>ReactNode</B> - be it components, divs, null, and more. If you directly use a component inside <B>Context</B>, you tightly couple it with that particular component, limiting the presentation to a specific manner.
+  </M>
+  <Code
+mode="dynamic"
+lang="tsx"
+description="Context coupled to one component"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/11.tsx"
+linesCount={4}
+/>
+<M>To address this, we should enable the passing of any <B>ReactNode</B> as children, essentially embracing a <B>composition pattern</B> with the <B>content projection</B> technique.</M>
+<Code
+mode="dynamic"
+lang="tsx"
+description="Flexibility added!"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/12.tsx"
+linesCount={10}
+/>
+<M>Thanks to this enhancement, we can now apply our <B>Context</B> logic by simply wrapping any component with its dedicated <B>Provider</B>.</M>
+<Code
+mode="dynamic"
+lang="tsx"
+description="The usage of new API"
+src="https://raw.githubusercontent.com/polubis/Snippets-for-articles-and-lessons/main/Common%20mistakes%20in%20using%20React%20Context%20API/13.tsx"
+linesCount={7}
+/>
+</Section>
+
