@@ -1,4 +1,4 @@
-// Function to flatten React Context Providers
+// Function to flatten React Context Providers.
 const flattenContextProviders = (providers) => {
   return providers.reduce((acc, Provider) => {
     return ({ children }) => (
@@ -7,10 +7,10 @@ const flattenContextProviders = (providers) => {
   }, ({ children }) => <>{children}</>);
 };
 
-// Array of context providers
+// Array of Context Providers.
 const contextProviders = [FirstContextProvider, SecondContextProvider, ThirdContextProvider];
 
-// Flattened context provider
+// Flattened Context Provider.
 const FlattenedContextProvider = flattenContextProviders(contextProviders);
 
 // 💢 Really bad idea!
