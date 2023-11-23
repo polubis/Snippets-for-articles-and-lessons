@@ -1,5 +1,5 @@
 import { useArticlesProvider } from '../../providers/articles'
-
+// 💚 Important logic is outside of context propagation.
 const getMockedArticles = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
