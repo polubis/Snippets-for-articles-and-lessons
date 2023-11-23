@@ -6,16 +6,16 @@ const INeedYourState = () => {
   return null
 }
 
-const Component2 = () => {
-  return <Component3 />
+const Component4 = () => {
+  return <INeedYourState />
 }
 
 const Component3 = () => {
   return <Component4 />
 }
 
-const Component4 = () => {
-  return <INeedYourState />
+const Component2 = () => {
+  return <Component3 />
 }
 
 const Component1 = () => {
