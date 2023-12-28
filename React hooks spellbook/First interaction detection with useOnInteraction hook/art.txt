@@ -1,0 +1,95 @@
+<Prelude label="First interaction use cases">
+  <M>Sometimes, you need to detect the <B>user's first interaction</B> in the application and perform specific actions. This could involve rendering a widget, logging an entry in the database via a dedicated API call, or other tasks. Performing these operations immediately after the application mounts - during the first render in <B>React</B> - may slow down your <B>Lighthouse</B> benchmark. If you prioritize performance, it's advisable to consider utilizing this mechanism.</M>
+  <M>For example, consider a scenario where a user lands on your page that requires fetching data to display a pop-up widget. Without this mechanism, you would make a call every time the user refreshes the page, even if they don't need this data/widget. By implementing this mechanism, you load the required data only when the user truly "interacts" with the app, reducing costs and improving application performance metrics. This is possible because the additional code for the required operation can be lazy-loaded.</M>
+<M>In the <A href="https://4markdown.com/">https://4markdown.com/</A> app, we utilize it to load the <B>Firebase</B> library, which is relatively large, only after the user interacts with the app. This enhancement has boosted our benchmarks from <B>94%</B> to <B>100%</B>. Check out the <B>GIF</B> below to understand how it works:</M>
+</Prelude>
+
+<Section>
+<XL>1. Detecting user interaction</XL>
+<M>Detecting the first user interaction varies between mobile and desktop devices. On mobile devices, it involves the use of a <B>touch event</B>, while on desktop devices, it relies on a <B>mouse move</B> event. Therefore, we require two distinct events and a mechanism to differentiate between them after detecting the initial user interaction.</M>
+<Code
+mode="static"
+lang="tsx"
+description="Events that we need"
+>
+{`// Adding events.
+window.addEventListener(\`mousemove\`, listener);
+window.addEventListener(\`touchstart\`, listener);
+// Removing events.  
+window.removeEventListener(\`touchstart\`, listener);  
+window.removeEventListener(\`mousemove\`, listener);`}
+</Code>
+</Section>
+
+<Section>
+<XL>2. Design of useOnInteraction hook</XL>
+<M>
+  To avoid cluttering our component code with repetitive logic for detecting the first user interaction, we'll create a custom hook called <B>useOnInteraction</B>. Components will then simply consume this hook and execute the necessary operations based on the results.
+</M>
+  <Code
+mode="static"
+lang="tsx"
+description="Usage example"
+>
+{`const MyComponent = () => {
+  const interacted = useOnInteraction();
+ 
+  React.useEffect(() => {
+    if (interacted) {
+      console.log('Do what you need');
+    }
+  }, [interacted]);
+ 
+  return interacted ? (
+    <React.Suspense>
+      <YourLazyComponent />
+    </React.Suspense>
+  ) : null;
+};`}
+</Code>
+</Section>
+
+<Section>
+<XL>3. Implementing useOnInteraction hook</XL>
+<M>
+  The implementation of the <B>useOnInteraction</B> hook involves utilizing <B>useState</B> to trigger a rerender when an interaction is detected, and the <B>useEffect</B> hook to listen to relevant events.
+</M>
+  <Code
+mode="static"
+lang="tsx"
+description="The useOnInteraction hook implementation"
+>
+{`import React from 'react';
+ 
+const useOnInteraction = () => {
+  const [interacted, setInteracted] = React.useState(false);
+ 
+  React.useEffect(() => {
+    // If interacted, we will skip adding events.
+    if (interacted) return;
+    // Function to update the state.
+    const listener = (): void => {
+      setInteracted(true);
+    };
+    // Events attachment.
+    window.addEventListener(\`mousemove\`, listener);
+    window.addEventListener(\`touchstart\`, listener);
+ 
+    return () => {
+      // Events removal.
+      window.removeEventListener(\`touchstart\`, listener);
+      window.removeEventListener(\`mousemove\`, listener);
+    };
+  }, [interacted]);
+ 
+  return interacted;
+};
+ 
+export { useOnInteraction };`}
+</Code>
+<M>When interaction is detected, we remove the current listeners and skip adding new ones with a simple <B>if statement</B> at the beginning of the <B>useEffect</B> implementation.</M>
+</Section>
+
+<Summary label="Summary">
+  <M>Now, you can listen for the first interaction and perform the necessary operations. I use this hook for <B>lazy loading</B> dedicated components or executing required calls/checks. For instance, it might involve checking the authorization status only after the user interacts with the app, preventing unnecessary calls to my API.</M>
+</Summary>
